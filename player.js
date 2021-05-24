@@ -45,7 +45,6 @@ function removeParentheses(string) {
 }
 
 current_video_index = 0;
-let selected_videos = [];
 video.addEventListener('ended', myHandler, false);
 
 function myHandler(e) {
