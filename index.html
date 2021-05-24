@@ -44,6 +44,10 @@
         </div>
         <div class="controls">
             <h2>Controls</h2>
+            <button id="play" onclick="playPauseVideo()">Play/Pause</button>
+            <button onclick="previous()">Previous</button>
+            <button onclick="next()">Next</button>
+            <br>
             <div>
                 <label for="volume">Volume</label>
                 <input onchange="changeVolume()" type="range" id="volume" name="volume" min="0" max="100" value="100">
@@ -61,7 +65,7 @@
             </div>
             <br>
             <div>
-                <button onclick='wide()'>Szeroko</button>
+                <button onclick='wide()'>Wide</button>
             </div>
         </div>
     </div>

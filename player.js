@@ -45,11 +45,12 @@ function removeParentheses(string) {
 }
 
 current_video_index = 0;
-document.getElementById('video').addEventListener('ended', myHandler, false);
+let selected_videos = [];
+video.addEventListener('ended', myHandler, false);
 
 function myHandler(e) {
     var arr = [];
-    var e = document.getElementById("select");
+    //var e = document.getElementById("select");
     var lis = document.getElementsByTagName("option");
     for (var i = 0; i < lis.length; ++i) {
         var item = lis[i];
@@ -57,24 +58,23 @@ function myHandler(e) {
             current_video_index = i;
         }
         if (lis[i].selected) {
-            arr.push(i);
+            arr.push(lis[i]);
         }
     }
-    console.log(arr);
-    if (current_video_index < lis.length - 1) {
-        next_video_link = removeParentheses(getParamNames(lis[current_video_index + 1].getAttribute('onclick')));
+    if (current_video_index < arr.length - 1) {
+        next_video_link = removeParentheses(getParamNames(arr[current_video_index + 1].getAttribute('onclick')));
         $("#video").attr('src', next_video_link);
-        var next_video_title = lis[current_video_index + 1].value;
-        $('#select').val(next_video_title);
+        //var next_video_title = arr[current_video_index + 1].value;
+        //$('#select').val(next_video_title);
         current_video_index += 1;
     } else {
-        next_video_link = removeParentheses(getParamNames(lis[0].getAttribute('onclick')));
+        next_video_link = removeParentheses(getParamNames(arr[0].getAttribute('onclick')));
         $("#video").attr('src', next_video_link);
-        var next_video_title = lis[0].value;
-        $('#select').val(next_video_title);
+        //var next_video_title = arr[0].value;
+        //$('#select').val(next_video_title);
         current_video_index = 0;
     }
-    $("#video")[0].load();
+    video.load();
 }
 
 function moveUp() {
@@ -181,4 +181,29 @@ window.onbeforeunload = function() {
 
 window.onload = function() {
     video.currentTime = window.localStorage.getItem(video.src);
+}
+
+function previous() {
+
+}
+
+function next() {
+    console.log(video.src);
+    var arr = [];
+    var lis = document.getElementsByTagName("option");
+    for (var i = 0; i < lis.length; ++i) {
+        console.log(lis[i]);
+    }
+    video.load();
+}
+
+function playPauseVideo() {
+    play = document.getElementById('play');
+    if (video.paused) {
+        play.setAttribute('data-icon', 'u');
+        video.play();
+    } else {
+        play.setAttribute('data-icon', 'P');
+        video.pause();
+    }
 }
