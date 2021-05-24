@@ -50,7 +50,6 @@ video.addEventListener('ended', myHandler, false);
 
 function myHandler(e) {
     var arr = [];
-    //var e = document.getElementById("select");
     var lis = document.getElementsByTagName("option");
     for (var i = 0; i < lis.length; ++i) {
         var item = lis[i];
@@ -64,14 +63,10 @@ function myHandler(e) {
     if (current_video_index < arr.length - 1) {
         next_video_link = removeParentheses(getParamNames(arr[current_video_index + 1].getAttribute('onclick')));
         $("#video").attr('src', next_video_link);
-        //var next_video_title = arr[current_video_index + 1].value;
-        //$('#select').val(next_video_title);
         current_video_index += 1;
     } else {
         next_video_link = removeParentheses(getParamNames(arr[0].getAttribute('onclick')));
         $("#video").attr('src', next_video_link);
-        //var next_video_title = arr[0].value;
-        //$('#select').val(next_video_title);
         current_video_index = 0;
     }
     video.load();
@@ -147,7 +142,6 @@ function maximize() {
 function wide() {
     div = document.getElementById('video_id');
     div.classList.remove('video_player');
-    //var screenProportion = window.screen.availWidth / window.screen.availHeight;
     video.style.width = 0.97 * window.screen.availWidth;
     video.style.height = window.screen.availHeight;
     video.style.margin = 10;
@@ -184,15 +178,47 @@ window.onload = function() {
 }
 
 function previous() {
-
-}
-
-function next() {
-    console.log(video.src);
     var arr = [];
     var lis = document.getElementsByTagName("option");
     for (var i = 0; i < lis.length; ++i) {
-        console.log(lis[i]);
+        if (lis[i].outerHTML.includes(video.src)) {
+            current_video_index = i;
+        }
+        if (lis[i].selected) {
+            arr.push(lis[i]);
+        }
+    }
+    if (current_video_index == 0) {
+        next_video_link = removeParentheses(getParamNames(arr[arr.length - 1].getAttribute('onclick')));
+        $("#video").attr('src', next_video_link);
+        current_video_index = arr.length - 1;
+    } else {
+        next_video_link = removeParentheses(getParamNames(arr[current_video_index - 1].getAttribute('onclick')));
+        $("#video").attr('src', next_video_link);
+        current_video_index -= 1;
+    }
+    video.load();
+}
+
+function next() {
+    var arr = [];
+    var lis = document.getElementsByTagName("option");
+    for (var i = 0; i < lis.length; ++i) {
+        if (lis[i].outerHTML.includes(video.src)) {
+            current_video_index = i;
+        }
+        if (lis[i].selected) {
+            arr.push(lis[i]);
+        }
+    }
+    if (current_video_index < arr.length - 1) {
+        next_video_link = removeParentheses(getParamNames(arr[current_video_index + 1].getAttribute('onclick')));
+        $("#video").attr('src', next_video_link);
+        current_video_index += 1;
+    } else {
+        next_video_link = removeParentheses(getParamNames(arr[0].getAttribute('onclick')));
+        $("#video").attr('src', next_video_link);
+        current_video_index = 0;
     }
     video.load();
 }
